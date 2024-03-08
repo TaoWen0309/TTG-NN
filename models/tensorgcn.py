@@ -28,7 +28,6 @@ class TenGCN(nn.Module):
 
         super(TenGCN, self).__init__()
 
-        self.final_dropout = final_dropout
         self.device = device
         self.num_layers = num_layers
         self.num_neighbors = 5
@@ -74,8 +73,7 @@ class TenGCN(nn.Module):
             self.output_tensor_layer = TCL(tensor_input_shape,tensor_hidden_shape)
         elif tensor_layer_type == 'TRL':
             self.output_tensor_layer = TRL(tensor_input_shape,tensor_hidden_shape)
-        self.output = MLP_output(hidden_dim,output_dim)
-        self.dropout = nn.Dropout(self.final_dropout)
+        self.output = MLP_output(hidden_dim,output_dim,final_dropout)
 
     def compute_batch_feat(self, batch_graph):
         edge_attr = None

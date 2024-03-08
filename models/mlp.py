@@ -53,7 +53,7 @@ class MLP(nn.Module):
 
 # MLP classifier
 class MLP_output(nn.Module):
-    def __init__(self, hidden_dim, output_dim):
+    def __init__(self, hidden_dim, output_dim, dropout):
         '''
             hidden_dim: dimensionality of hidden features
             output_dim: number of classes for prediction
@@ -65,9 +65,8 @@ class MLP_output(nn.Module):
         self.linear = nn.Linear(hidden_dim,1)
         self.output = nn.Sequential(nn.BatchNorm1d(hidden_dim),
                                     nn.ReLU(),
-                                    nn.Linear(hidden_dim, output_dim),
-                                    nn.BatchNorm1d(output_dim),
-                                    nn.Softmax(dim=1))
+                                    nn.Dropout(dropout),
+                                    nn.Linear(hidden_dim, output_dim))
 
     def forward(self, h):
         h = self.linear(h).squeeze()
