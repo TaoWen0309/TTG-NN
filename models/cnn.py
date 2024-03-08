@@ -4,7 +4,6 @@ import torch.nn as nn
 class CNN(nn.Module):
     def __init__(self, dim_in, hidden_dim, kernel_size, stride):
         super(CNN, self).__init__()
-        self.dim_in = dim_in
         self.kernel_size = kernel_size
         self.stride = stride
         self.cnn = nn.Sequential(
@@ -17,7 +16,7 @@ class CNN(nn.Module):
         return feature
 
     # compute output dim given the above kernel_size and stride
-    def cnn_output_dim(self):
-        tmp_dim = int((self.dim_in-self.kernel_size)/self.stride)+1
+    def cnn_output_dim(self, PI_dim):
+        tmp_dim = int((PI_dim-self.kernel_size)/self.stride)+1
         output_dim = int((tmp_dim-self.kernel_size)/self.stride)+1
         return output_dim

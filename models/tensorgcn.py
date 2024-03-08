@@ -1,12 +1,12 @@
 import torch
 import torch.nn as nn
 from torch_geometric.nn.pool.topk_pool import topk,filter_adj
-from torch_geometric.nn import GCNConv, SAGEConv, GATConv, GINConv
+from torch_geometric.nn import GCNConv
 
 import sys
 sys.path.append("models/")
 from mlp import MLP, MLP_output
-from cnn import CNN, cnn_output_dim
+from cnn import CNN
 from diagram import sum_diag_from_point_cloud
 
 from tltorch import TRL, TCL
@@ -56,7 +56,7 @@ class TenGCN(nn.Module):
         # PI tensor block
         # CNN
         self.cnn = CNN(len(sublevel_filtration_methods),hidden_dim,kernel_size=2,stride=2)
-        cnn_output_shape = self.cnn.cnn_output_dim()
+        cnn_output_shape = self.cnn.cnn_output_dim(PI_dim)
         # tensor layer
         tensor_input_shape = (hidden_dim,cnn_output_shape,cnn_output_shape)
         tensor_hidden_shape = [hidden_dim,hidden_dim,hidden_dim]

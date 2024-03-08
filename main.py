@@ -56,7 +56,7 @@ def pass_data_iteratively(model, graphs, PIs, minibatch_size = 64):
         output.append(model(batch_graph,batch_PI).detach())
     return torch.cat(output, 0)
 
-def test(model, device, train_graphs, train_PIs, test_graphs, test_PIs):
+def test(model, device, test_graphs, test_PIs):
     model.eval()
 
     output = pass_data_iteratively(model, test_graphs, test_PIs)
@@ -141,7 +141,7 @@ def main():
 
         avg_loss = train(args, model, device, train_graphs, train_PIs, optimizer, epoch)
         scheduler.step()
-        acc_test = test(model, device, train_graphs, train_PIs, test_graphs, test_PIs)
+        acc_test = test(model, device, test_graphs, test_PIs)
 
         max_acc = max(max_acc, acc_test)
 
