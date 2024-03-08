@@ -152,6 +152,5 @@ class TenGCN(nn.Module):
         batch_graph_tensor = self.output_tensor_layer(batch_graph_tensor).transpose(1,3) # (batch_size,hidden_dim,hidden_dim,hidden_dim*2)
         batch_graph_attn = self.attend(batch_graph_tensor).squeeze() # (batch_size,hidden_dim,hidden_dim)
         score = self.output(batch_graph_attn) # (batch_size,output_dim)
-        score = self.dropout(score)
 
         return score
