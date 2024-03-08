@@ -1,22 +1,23 @@
-import torch
-import torch.nn.functional as F
 import torch.nn as nn
 
 # for PI block
 class CNN(nn.Module):
-    def __init__(self, dim_in, hidden_dim):
+    def __init__(self, dim_in, hidden_dim, kernel_size, stride):
         super(CNN, self).__init__()
+        self.dim_in = dim_in
+        self.kernel_size = kernel_size
+        self.stride = stride
         self.cnn = nn.Sequential(
-            nn.Conv2d(dim_in, hidden_dim, kernel_size=2, stride=2),
+            nn.Conv2d(dim_in, hidden_dim, kernel_size=kernel_size, stride=stride),
             nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2)
+            nn.MaxPool2d(kernel_size=kernel_size, stride=stride)
         )
     def forward(self, PI):
         feature = self.cnn(PI)
         return feature
 
-# compute output dim given the above kernel_size and stride
-def cnn_output_dim(dim_in):
-    tmp_dim = int((dim_in-2)/2)+1
-    output_dim = int((tmp_dim-2)/2)+1
-    return output_dim
+    # compute output dim given the above kernel_size and stride
+    def cnn_output_dim(self):
+        tmp_dim = int((self.dim_in-self.kernel_size)/self.stride)+1
+        output_dim = int((tmp_dim-self.kernel_size)/self.stride)+1
+        return output_dim

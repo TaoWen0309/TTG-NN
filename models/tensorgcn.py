@@ -55,8 +55,8 @@ class TenGCN(nn.Module):
 
         # PI tensor block
         # CNN
-        self.cnn = CNN(len(sublevel_filtration_methods),hidden_dim)
-        cnn_output_shape = cnn_output_dim(PI_dim)
+        self.cnn = CNN(len(sublevel_filtration_methods),hidden_dim,kernel_size=2,stride=2)
+        cnn_output_shape = self.cnn.cnn_output_dim()
         # tensor layer
         tensor_input_shape = (hidden_dim,cnn_output_shape,cnn_output_shape)
         tensor_hidden_shape = [hidden_dim,hidden_dim,hidden_dim]
