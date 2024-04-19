@@ -94,17 +94,17 @@ def persistence_images(dgm, resolution = [50,50], return_raw = False, normalizat
 
 def compute_PI_tensor(graph_list,PI_dim,sublevel_filtration_methods=['degree','betweenness','communicability','eigenvector','closeness']):
         
-        PI_list = []
-        for graph in graph_list:
-            adj = nx.adjacency_matrix(to_networkx(graph)).todense()
-            PI_list_i = [] 
-            # PI tensor
-            for j in range(len(sublevel_filtration_methods)):
-                pd = sublevel_persistence_diagram(adj,sublevel_filtration_methods[j])
-                pi = torch.FloatTensor(persistence_images(pd,resolution=[PI_dim]*2))
-                PI_list_i.append(pi)
-            PI_tensor_i = torch.stack(PI_list_i)
-            PI_list.append(PI_tensor_i)
+    PI_list = []
+    for graph in graph_list:
+        adj = nx.adjacency_matrix(to_networkx(graph)).todense()
+        PI_list_i = [] 
+        # PI tensor
+        for j in range(len(sublevel_filtration_methods)):
+            pd = sublevel_persistence_diagram(adj,sublevel_filtration_methods[j])
+            pi = torch.FloatTensor(persistence_images(pd,resolution=[PI_dim]*2))
+            PI_list_i.append(pi)
+        PI_tensor_i = torch.stack(PI_list_i)
+        PI_list.append(PI_tensor_i)
 
-        PI_concat = torch.stack(PI_list)
-        return PI_concat
+    PI_concat = torch.stack(PI_list)
+    return PI_concat
